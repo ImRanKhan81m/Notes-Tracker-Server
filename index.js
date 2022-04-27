@@ -17,25 +17,36 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
     try {
         await client.connect();
-        const collection = client.db("notesTracker").collection("notes");
-        // console.log('connected to database');
+        const notesCollection = client.db("notesTracker").collection("notes");
+
         // get  Api to read all notes
 
+        app.get('/notes', async (req, res) => {
+            const query = req.query;
+            console.log(query);
+
+            const cursor = notesCollection.find({ query });
+            const result = await cursor.toArray()
+
+            res.send(result)
+        })
 
 
         // create notesTracker
+
+        app.post('/note',(req, res)=>{
+            const data = req.body;
+            
+        })
+
 
 
 
 
 
         // update notesTracker
-
-
-
-
         // Delete notesTracker
-        
+        console.log('connected to database');
     }
     finally {
 

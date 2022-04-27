@@ -46,6 +46,7 @@ async function run() {
 
 
         // update notesTracker
+        // localhost:5000/note/62697be2ffdd1c82a805ff3b
 
         app.put('/note/:id', async (req, res) => {
             const id = req.params.id;
@@ -65,12 +66,22 @@ async function run() {
             res.send(result);
         })
 
-
-
-
-
-
         // Delete notesTracker
+        // localhost:5000/note/62697be2ffdd1c82a805ff3b
+
+        app.delete('/note/:id', async(req, res)=>{
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) };
+            const result = await notesCollection.deleteOne(filter);
+            res.send(result);
+        })
+
+
+
+
+
+
+
         console.log('connected to database');
     }
     finally {

@@ -10,7 +10,7 @@ require('dotenv').config();
 /* ${process.env.DB_USER}
 ${process.env.DB_PASS} */
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = "mongodb+srv://NotesTracker:tFlGkk5ushNsMPLs@cluster0.xnxtp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
@@ -35,9 +35,8 @@ async function run() {
         // create notesTracker
         // localhost:5000/note
         /*
-         "username": "imran",
+         "username": "imran", 
         "textdata": "hello world"
-        
         */
 
         app.post('/note', async (req, res) => {
@@ -50,11 +49,21 @@ async function run() {
         })
 
 
-
-
-
-
         // update notesTracker
+
+        app.put('/note/:id', (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) };
+
+            // console.log('from put method', id);
+            res.send()
+        })
+
+
+
+
+
+
         // Delete notesTracker
         console.log('connected to database');
     }

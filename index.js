@@ -24,11 +24,9 @@ async function run() {
 
         app.get('/notes', async (req, res) => {
             const query = req.query;
-            console.log(query);
-
+            // console.log(query);
             const cursor = notesCollection.find(query);
-            const result = await cursor.toArray()
-
+            const result = await cursor.toArray();
             res.send(result)
         })
 
@@ -41,22 +39,30 @@ async function run() {
 
         app.post('/note', async (req, res) => {
             const data = req.body;
-            console.log(data);
-
-            const result = await notesCollection.insertOne(data)
-
-            res.send(result)
+            // console.log(data);
+            const result = await notesCollection.insertOne(data);
+            res.send(result);
         })
 
 
         // update notesTracker
 
-        app.put('/note/:id', (req, res) => {
+        app.put('/note/:id', async (req, res) => {
             const id = req.params.id;
+            const data = req.body;
+            console.log('from update api', data);
             const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    userName: data.userName,
+                    textData: data.textData,
+                },
+            };
+            const result = await notesCollection.updateOne(filter, updateDoc, options);
 
             // console.log('from put method', id);
-            res.send()
+            res.send(result);
         })
 
 

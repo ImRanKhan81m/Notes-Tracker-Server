@@ -7,16 +7,49 @@ app.use(cors());
 app.use(express.json());
 require('dotenv').config();
 
-
+/* ${process.env.DB_USER}
+${process.env.DB_PASS} */
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.xnxtp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri = "mongodb+srv://NotesTracker:tFlGkk5ushNsMPLs@cluster0.xnxtp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
-});
+
+async function run() {
+    try {
+        await client.connect();
+        const collection = client.db("notesTracker").collection("notes");
+        // console.log('connected to database');
+        // get  Api to read all notes
+
+
+
+        // create notesTracker
+
+
+
+
+
+        // update notesTracker
+
+
+
+
+        // Delete notesTracker
+        
+    }
+    finally {
+
+    }
+}
+run().catch(console.dir)
+
+/* client.connect(err => {
+    const collection = client.db("test").collection("devices");
+    // perform actions on the collection object
+
+    console.log('connect to db');
+    //   client.close();
+}); */
 
 
 
@@ -24,7 +57,7 @@ client.connect(err => {
 
 
 
-app.get('/', (req, res)=>{
+app.get('/', (req, res) => {
     res.send('Running my code CRUD SERVER')
 });
 app.listen(port, () => {

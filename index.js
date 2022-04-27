@@ -20,23 +20,33 @@ async function run() {
         const notesCollection = client.db("notesTracker").collection("notes");
 
         // get  Api to read all notes
+        // localhost:5000/notes
 
         app.get('/notes', async (req, res) => {
             const query = req.query;
             console.log(query);
 
-            const cursor = notesCollection.find({ query });
+            const cursor = notesCollection.find(query);
             const result = await cursor.toArray()
 
             res.send(result)
         })
 
-
         // create notesTracker
+        // localhost:5000/note
+        /*
+         "username": "imran",
+        "textdata": "hello world"
+        
+        */
 
-        app.post('/note',(req, res)=>{
+        app.post('/note', async (req, res) => {
             const data = req.body;
-            
+            console.log(data);
+
+            const result = await notesCollection.insertOne(data)
+
+            res.send(result)
         })
 
 
